@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Child from "./child";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      name: "John",
+    };
+    console.log("construct");
+  }
+
+  UNSAFE_componentWillMount() {
+    if (window.innerWidth < 500) {
+      this.setState({ innerWidth: window.innerWidth });
+    }
+  }
+
+  UNSAFE_componentDidMount() {
+    console.log("didmount");
+  }
+
+  componentDidUpdate() {
+    console.log("Did Update");
+  }
+
+  changeState() {
+    this.setState({ name: "Jill" });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        Name: {this.state.name}
+        <br></br>
+        Inner Width: {this.state.innerWidth}
+        <Child name={this.state.name} />
+        <button onClick={this.changeState.bind(this)}>Change State</button>
+      </div>
+    );
+  }
 }
 
 export default App;
